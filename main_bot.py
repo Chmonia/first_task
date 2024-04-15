@@ -5,7 +5,7 @@ import logging
 from aiogram.enums import ContentType
 from aiogram.filters import Command
 from dotenv import load_dotenv
-from core.handlers.basic import get_answer, get_start, get_sticker
+from core.handlers.basic import get_answer, get_start, get_sticker, command_data, command_help, command_time
 from core.settings import settings
 from core.utils.commands import set_commands
 
@@ -30,6 +30,9 @@ async def start():
     dp.shutdown.register(stop_bot)
     dp.message.register(get_sticker, F.content_type == ContentType.STICKER)
     dp.message.register(get_start, Command(commands=["start", "run", "старт"]))
+    dp.message.register(command_data, Command(commands="date"))
+    dp.message.register(command_help, Command(commands="help"))
+    dp.message.register(command_time, Command(commands="time"))
     dp.message.register(get_answer)
     try:
         await dp.start_polling(bot)
